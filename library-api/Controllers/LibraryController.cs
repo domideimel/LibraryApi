@@ -59,5 +59,20 @@ namespace library_api.Controllers
 
             return Ok(book);
         }
+
+        [HttpDelete]
+        public IActionResult DeleteBook(int id)
+        {
+            Book? book = _db.Books.SingleOrDefault(b => b != null && b.Id == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            
+            _db.Remove(book);
+            _db.SaveChanges();
+
+            return Ok(book);
+        }
     }
 }
