@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +27,14 @@ namespace library_api.Controllers
 
             if (book != null) return CreatedAtAction("GetBook", new {id = book.Id}, book);
             return BadRequest();
+        }
+        
+        [HttpGet]
+        [Route("books")]
+        public IActionResult GetBooks()
+        {
+            var books = _db.Books.ToList();
+            return books.Count == 0 ? Ok("No books found") : Ok(books);
         }
 
         [HttpGet]
