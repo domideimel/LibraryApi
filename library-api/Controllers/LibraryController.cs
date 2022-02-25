@@ -41,5 +41,23 @@ namespace library_api.Controllers
 
             return Ok(book);
         }
+        
+        [HttpPut]
+        public IActionResult UpdateBook(Book? book)
+        {
+            Book? bookDb = _db.Books.SingleOrDefault(b => book != null && b != null && b.Id == book.Id);
+            if (bookDb == null)
+            {
+                return NotFound();
+            }
+            
+            bookDb.Title = book?.Title;
+            bookDb.Author = book?.Author;
+            bookDb.PageCount = ((int) book?.PageCount)!;
+            
+            _db.SaveChanges();
+
+            return Ok(book);
+        }
     }
 }
